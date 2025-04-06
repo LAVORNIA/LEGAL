@@ -1,135 +1,67 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lavornia - Asesoramiento Legal</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22>⚖️</text></svg>">
-  <link href="https://fonts.googleapis.com/css2?family=Lora&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --azul: #a2d2ff;
-      --azul-claro: #cdeffd;
-      --agua: #d0f4ea;
-      --texto: #1f2933;
-      --azul-oscuro: #2b6777;
-      --verde-brillante: #91f3cd;
-      --gris-suave: #f1f1f1;
+<button onclick="mostrarAgenda()" style="margin: 2rem; padding: 0.75rem 1.5rem; font-size: 1rem; border: none; border-radius: 8px; background-color: var(--azul); color: white; cursor: pointer;">
+  Solicitar Reunión
+</button>
+
+<section class="agenda" id="agendaSection" style="display: none;">
+  <h2>Agendá una Reunión</h2>
+  <p>Seleccioná una fecha disponible:</p>
+  <div id="calendar" style="display: flex; flex-wrap: wrap; gap: 0.5rem;"></div>
+
+  <form class="agenda-form" id="agendaForm" action="mailto:nicolavornia@gmail.com" method="post" enctype="text/plain" onsubmit="return mostrarConfirmacion(event)">
+    <input type="text" name="nombre" placeholder="Tu nombre" required>
+    <input type="email" name="email" placeholder="Tu email" required>
+    <input type="text" name="fecha" id="selectedDate" placeholder="Fecha seleccionada" readonly required>
+    <textarea name="descripcion" rows="3" placeholder="Breve descripción del motivo de la reunión" required></textarea>
+    <button type="submit">Solicitar Reunión</button>
+  </form>
+  <div class="confirmation-message" id="confirmacion">
+    ¡Gracias! Tu solicitud fue enviada con éxito.
+  </div>
+</section>
+
+<script>
+  function mostrarAgenda() {
+    document.getElementById("agendaSection").style.display = "block";
+  }
+
+  const calendar = document.getElementById("calendar");
+  const bookedDates = ["2025-04-08", "2025-04-10"];
+  const today = new Date();
+  const selectedDateInput = document.getElementById("selectedDate");
+
+  for (let i = 0; i < 14; i++) {
+    const date = new Date(today);
+    date.setDate(today.getDate() + i);
+    const iso = date.toISOString().split('T')[0];
+    const [y, m, d] = iso.split('-');
+    const formatted = `${d}/${m}/${y}`;
+
+    const button = document.createElement("button");
+    button.style.padding = "0.5rem";
+    button.style.borderRadius = "6px";
+    button.style.border = "1px solid #ccc";
+    button.style.minWidth = "90px";
+    button.style.cursor = "pointer";
+    button.style.backgroundColor = bookedDates.includes(iso) ? "#ccc" : "#b3f1dd";
+    button.textContent = formatted;
+
+    if (bookedDates.includes(iso)) {
+      button.disabled = true;
+    } else {
+      button.onclick = () => {
+        selectedDateInput.value = formatted;
+      };
     }
 
-    body {
-      margin: 0;
-      font-family: 'Lora', serif;
-      background-color: var(--agua);
-      background-image: url('https://images.unsplash.com/photo-1588776814546-5a7b0bfbdb1a?auto=format&fit=crop&w=1600&q=60');
-      background-size: cover;
-      background-attachment: fixed;
-      color: var(--texto);
-      line-height: 1.6;
-    }
+    calendar.appendChild(button);
+  }
 
-    .agenda button {
-      font-family: 'Lora', serif;
-    }
-
-    .agenda-form {
-      margin-top: 1rem;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .agenda-form textarea {
-      resize: vertical;
-    }
-
-    .agenda-form input, .agenda-form textarea {
-      padding: 0.5rem;
-      margin-bottom: 0.5rem;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      font-size: 1rem;
-    }
-
-    .agenda-form button {
-      background-color: var(--azul);
-      color: white;
-      border: none;
-      border-radius: 6px;
-      padding: 0.75rem;
-      cursor: pointer;
-    }
-
-    .confirmation-message {
-      background-color: var(--verde-brillante);
-      padding: 1rem;
-      border-radius: 8px;
-      color: var(--texto);
-      margin-top: 1rem;
-      display: none;
-    }
-  </style>
-</head>
-<body>
-  <!-- ... código anterior ... -->
-
-  <section class="agenda">
-    <h2>Solicitar una Reunión</h2>
-    <p>Seleccioná una fecha disponible para coordinar una reunión:</p>
-    <div id="calendar"></div>
-    <form class="agenda-form" id="agendaForm" action="mailto:nicolavornia@gmail.com" method="post" enctype="text/plain" onsubmit="return mostrarConfirmacion(event)">
-      <input type="text" name="nombre" placeholder="Tu nombre" required>
-      <input type="email" name="email" placeholder="Tu email" required>
-      <input type="text" name="fecha" id="selectedDate" placeholder="Fecha seleccionada" readonly required>
-      <textarea name="descripcion" rows="4" placeholder="Breve descripción del motivo de la reunión" required></textarea>
-      <button type="submit">Solicitar Reunión</button>
-    </form>
-    <div class="confirmation-message" id="confirmacion">
-      ¡Gracias! Tu solicitud fue enviada con éxito. Te contactaremos pronto.
-    </div>
-  </section>
-
-  <script>
-    function toggleMenu() {
-      const menu = document.getElementById("menuContent");
-      menu.classList.toggle("show");
-    }
-
-    const calendar = document.getElementById("calendar");
-    const bookedDates = ["2025-04-08", "2025-04-10"];
-    const today = new Date();
-    const selectedDateInput = document.getElementById("selectedDate");
-
-    for (let i = 0; i < 14; i++) {
-      const date = new Date(today);
-      date.setDate(today.getDate() + i);
-      const iso = date.toISOString().split('T')[0];
-      const [y, m, d] = iso.split('-');
-      const formatted = `${d}/${m}/${y}`;
-
-      const button = document.createElement("button");
-      button.className = "slot-button available";
-      button.textContent = formatted;
-
-      if (bookedDates.includes(iso)) {
-        button.classList.add("unavailable");
-        button.disabled = true;
-      } else {
-        button.onclick = () => {
-          selectedDateInput.value = formatted;
-        };
-      }
-
-      calendar.appendChild(button);
-    }
-
-    function mostrarConfirmacion(e) {
-      e.preventDefault();
-      document.getElementById("confirmacion").style.display = "block";
-      setTimeout(() => {
-        document.getElementById("agendaForm").submit();
-      }, 1000);
-      return false;
-    }
-  </script>
-</body>
-</html>
+  function mostrarConfirmacion(e) {
+    e.preventDefault();
+    document.getElementById("confirmacion").style.display = "block";
+    setTimeout(() => {
+      document.getElementById("agendaForm").submit();
+    }, 1000);
+    return false;
+  }
+</script>
