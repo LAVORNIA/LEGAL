@@ -6,35 +6,96 @@
   <title>Lavornia - Asesoramiento Legal</title>
   <link href="https://fonts.googleapis.com/css2?family=Lora&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --violeta: #b388eb;
+      --lila: #e0bbff;
+      --purpura: #d291bc;
+      --agua: #e0f7f1;
+      --texto: #2d1e2f;
+    }
+
     body {
       margin: 0;
       font-family: 'Lora', serif;
-      background-color: #f0fdfb;
-      color: #1a3e3e;
+      background-color: var(--agua);
+      background-image: url('https://images.unsplash.com/photo-1588776814546-5a7b0bfbdb1a?auto=format&fit=crop&w=1600&q=60');
+      background-size: cover;
+      background-attachment: fixed;
+      color: var(--texto);
       line-height: 1.6;
     }
+
     header {
-      background-color: #a8dadc;
+      background-color: var(--violeta);
       padding: 2.5rem 1rem;
       text-align: center;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
+
     header h1 {
       margin: 0;
       font-size: 3rem;
       letter-spacing: 1px;
     }
+
     header p {
       font-size: 1.3rem;
       margin-top: 0.5rem;
-      color: #003049;
     }
+
+    .topbar {
+      background-color: var(--purpura);
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+    }
+
+    .topbar .info {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .menu {
+      position: relative;
+    }
+
+    .hamburger {
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .menu-content {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background-color: white;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 1rem;
+      border-radius: 8px;
+      z-index: 1000;
+    }
+
+    .menu-content.show {
+      display: block;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     section {
       max-width: 900px;
       margin: 2rem auto;
       padding: 1rem;
     }
-    .services, .about, .contact {
+
+    .services, .about, .contact, .team {
       margin-bottom: 2.5rem;
       background: white;
       border-radius: 12px;
@@ -42,33 +103,39 @@
       box-shadow: 0 4px 15px rgba(0,0,0,0.05);
       transition: transform 0.3s ease;
     }
-    .services:hover, .about:hover, .contact:hover {
+
+    .services:hover, .about:hover, .contact:hover, .team:hover {
       transform: translateY(-5px);
     }
+
     h2 {
-      border-bottom: 2px solid #457b9d;
+      border-bottom: 2px solid var(--purpura);
       padding-bottom: 0.5rem;
       margin-bottom: 1rem;
-      color: #1d3557;
+      color: var(--texto);
     }
+
     select {
       padding: 0.75rem;
       margin-bottom: 1.5rem;
       border: 1px solid #ccc;
       border-radius: 8px;
       font-size: 1rem;
-      background-color: #f8f9fa;
     }
+
     ul {
       padding-left: 1.5rem;
     }
+
     ul li {
       margin-bottom: 0.5rem;
     }
+
     form {
       display: flex;
       flex-direction: column;
     }
+
     input, textarea {
       padding: 0.75rem;
       margin-bottom: 1rem;
@@ -76,8 +143,9 @@
       border-radius: 6px;
       font-size: 1rem;
     }
+
     button {
-      background-color: #457b9d;
+      background-color: var(--purpura);
       color: white;
       padding: 0.75rem;
       border: none;
@@ -86,17 +154,20 @@
       font-size: 1rem;
       transition: background-color 0.3s ease;
     }
+
     button:hover {
-      background-color: #1d3557;
+      background-color: var(--texto);
     }
+
     footer {
-      background-color: #a8dadc;
+      background-color: var(--violeta);
       text-align: center;
       padding: 1rem;
       font-size: 0.9rem;
-      color: #003049;
+      color: white;
       box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
     }
+
     @media (max-width: 600px) {
       header h1 {
         font-size: 2rem;
@@ -104,10 +175,32 @@
       header p {
         font-size: 1rem;
       }
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+      }
     }
   </style>
 </head>
 <body>
+  <div class="topbar">
+    <div class="menu">
+      <div class="hamburger" onclick="toggleMenu()">☰ Servicios</div>
+      <div class="menu-content" id="menuContent">
+        <p>Licencias</p>
+        <p>Mediaciones</p>
+        <p>Demandas</p>
+        <p>Asesoría</p>
+      </div>
+    </div>
+    <div class="info">
+      <div>📍 Alem 676</div>
+      <div>📧 nicolavornia@gmail.com</div>
+      <div>📞 2281418173</div>
+    </div>
+  </div>
+
   <header>
     <h1>Lavornia</h1>
     <p>Asesoramiento legal personalizado</p>
@@ -132,6 +225,16 @@
     </ul>
   </section>
 
+  <section class="team">
+    <h2>Equipo</h2>
+    <ul>
+      <li><strong>Matteo Mosca</strong> – Bancario/Tributario, Deportivo</li>
+      <li><strong>Lautaro Alvares</strong> – Concurso y Sociedades</li>
+      <li><strong>Joaquín Campi</strong> – Familia</li>
+      <li><strong>Uma Molinuevo</strong> – Sociedades y Comercial</li>
+    </ul>
+  </section>
+
   <section class="about">
     <h2>Sobre mí</h2>
     <p>Soy Nicolás Lavornia, abogado con experiencia en brindar soluciones legales claras, personalizadas y efectivas. Mi enfoque está en construir relaciones de confianza con cada cliente.</p>
@@ -150,6 +253,12 @@
   <footer>
     &copy; 2025 Lavornia. Todos los derechos reservados.
   </footer>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById("menuContent");
+      menu.classList.toggle("show");
+    }
+  </script>
 </body>
 </html>
-
