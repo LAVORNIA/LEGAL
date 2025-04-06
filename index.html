@@ -12,6 +12,8 @@
       --purpura: #d291bc;
       --agua: #e0f7f1;
       --texto: #2d1e2f;
+      --rojo: #e57373;
+      --bordo: #800020;
     }
 
     body {
@@ -26,7 +28,7 @@
     }
 
     header {
-      background-color: var(--violeta);
+      background-color: var(--bordo);
       padding: 2.5rem 1rem;
       text-align: center;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
@@ -36,15 +38,17 @@
       margin: 0;
       font-size: 3rem;
       letter-spacing: 1px;
+      color: white;
     }
 
     header p {
       font-size: 1.3rem;
       margin-top: 0.5rem;
+      color: white;
     }
 
     .topbar {
-      background-color: var(--purpura);
+      background-color: var(--rojo);
       color: white;
       display: flex;
       justify-content: space-between;
@@ -77,6 +81,11 @@
       padding: 1rem;
       border-radius: 8px;
       z-index: 1000;
+    }
+
+    .menu-content p {
+      color: black;
+      margin: 0.5rem 0;
     }
 
     .menu-content.show {
@@ -160,7 +169,7 @@
     }
 
     footer {
-      background-color: var(--violeta);
+      background-color: var(--rojo);
       text-align: center;
       padding: 1rem;
       font-size: 0.9rem;
